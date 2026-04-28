@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karan Nandkar — Senior Gameplay Engineer</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="og-image.png">
+
+  <!-- SEO -->
+  <meta name="description" content="Senior Gameplay Engineer with 9 years shipping mobile and PC games. Multiplayer architecture, gameplay systems, and mobile performance. Open to Lead roles — remote or visa-sponsored relocation.">
+  <meta name="author" content="Karan Nandkar">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="gameplay engineer, multiplayer, Unreal Engine 5, Unity, C++, C#, mobile performance, game developer, Mumbai">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codekarangames.dev">
+  <meta property="og:title" content="Karan Nandkar — Senior Gameplay Engineer">
+  <meta property="og:description" content="I build systems that scale — not features that break later. Multiplayer architecture, gameplay systems, mobile performance. Open to Lead roles.">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Karan Nandkar · Gameplay Engineer">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Karan Nandkar — Senior Gameplay Engineer">
+  <meta name="twitter:description" content="I build systems that scale — not features that break later. Multiplayer architecture, gameplay systems, mobile performance.">
+  <meta name="twitter:image" content="og-image.png">
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#171c26">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --color-base:           oklch(16% 0.018 240);
+      --color-surface:        oklch(21% 0.018 240);
+      --color-surface-raised: oklch(26% 0.020 240);
+      --color-border:         oklch(29% 0.020 240);
+      --color-border-subtle:  oklch(23% 0.015 240);
+      --color-tick:           oklch(76% 0.175 196);
+      --color-tick-dim:       oklch(76% 0.175 196 / 0.25);
+      --color-hud:            oklch(56% 0.040 230);
+      --color-crit:           oklch(68% 0.155 42);
+      --color-xp:             oklch(70% 0.140 148);
+      --color-text:           oklch(91% 0.010 230);
+      --color-text-dim:       oklch(62% 0.020 230);
+      --ease-out-expo:        cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring:          cubic-bezier(0.34, 1.56, 0.64, 1);
+      --font-mono:            'JetBrains Mono', 'Fira Code', monospace;
+      --font-body:            'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      background-color: var(--color-base);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HUD label utility */
+    .hud-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--color-hud);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Project card with scanline hover */
+    .project-card {
+      position: relative;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+      transition:
+        transform 0.35s var(--ease-out-expo),
+        border-color 0.35s var(--ease-out-expo),
+        box-shadow 0.35s var(--ease-out-expo);
+      cursor: default;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.05) 3px,
+        rgba(0,0,0,0.05) 4px
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out-expo);
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--color-tick);
+      box-shadow: 0 0 0 1px var(--color-tick),
+                  0 0 28px rgba(0, 200, 220, 0.14),
+                  0 12px 40px rgba(0,0,0,0.5);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    /* System tile */
+    .system-tile {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      overflow: hidden;
+    }
+    .system-tile:hover, .system-tile.expanded {
+      border-color: var(--color-tick);
+      box-shadow: 0 0 20px rgba(0,200,220,0.08);
+    }
+
+    /* Pulse animation */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 5px var(--color-tick); }
+      50% { opacity: 0.4; box-shadow: 0 0 14px var(--color-tick); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--color-base); }
+    ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-hud); }
+
+    /* Range input */
+    input[type=range] { -webkit-appearance: none; appearance: none; outline: none; }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--color-tick);
+      cursor: pointer;
+      margin-top: -4px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--color-border);
+    }
+
+    :focus-visible { outline: 2px solid var(--color-tick); outline-offset: 3px; }
+
+    /* Timeline line */
+    .timeline-line {
+      position: absolute;
+      left: 15px;
+      top: 32px;
+      bottom: 0;
+      width: 1px;
+      background: var(--color-border);
+    }
+
+    /* Mobile utility */
+    @media (max-width: 767px) {
+      .hide-mobile { display: none !important; }
+    }
+    @media (min-width: 768px) {
+      .hide-desktop { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="components/Nav.jsx"></script>
+  <script type="text/babel" src="components/Hero.jsx"></script>
+  <script type="text/babel" src="components/Work.jsx"></script>
+  <script type="text/babel" src="components/Systems.jsx"></script>
+  <script type="text/babel" src="components/Experience.jsx"></script>
+  <script type="text/babel" src="components/Writing.jsx"></script>
+  <script type="text/babel" src="components/Contact.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>

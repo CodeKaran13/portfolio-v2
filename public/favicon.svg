@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="5" fill="#171c26"></rect>
+  <path d="M4 9 L4 4 L9 4" stroke="#00c9e0" stroke-width="1.6" stroke-linecap="square"></path>
+  <path d="M31 4 L36 4 L36 9" stroke="#00c9e0" stroke-width="1.6" stroke-linecap="square"></path>
+  <path d="M4 31 L4 36 L9 36" stroke="#00c9e0" stroke-width="1.6" stroke-linecap="square"></path>
+  <path d="M31 36 L36 36 L36 31" stroke="#00c9e0" stroke-width="1.6" stroke-linecap="square"></path>
+  <text x="20" y="27" text-anchor="middle" font-family="&#39;JetBrains Mono&#39;, &#39;Courier New&#39;, monospace" font-size="14" font-weight="700" fill="#00c9e0">KN</text>
+</svg>
