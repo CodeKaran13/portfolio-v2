@@ -2,19 +2,22 @@
 
 import { useRef, useEffect, useState } from 'react';
 
-const LagCompCanvas = () => {
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
+const LagCompCanvas = () =>
+{
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const latencyRef = useRef(80);
   const runningRef = useRef(true);
   const [latency, setLatency] = useState(80);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const canvas = canvasRef.current!;
-    const ctx    = canvas.getContext('2d')!;
+    const ctx = canvas.getContext('2d')!;
 
-    const resize = () => {
+    const resize = () =>
+    {
       const w = canvas.parentElement!.getBoundingClientRect().width;
-      canvas.width  = Math.floor(w);
+      canvas.width = Math.floor(w);
       canvas.height = 260;
     };
     resize();
@@ -32,15 +35,17 @@ const LagCompCanvas = () => {
       clientX: canvas.width / 2, clientY: 130,
       serverX: canvas.width / 2, serverY: 130,
       history: [] as { x: number; y: number; t: number }[],
-      trail:   [] as { x: number; y: number }[],
+      trail: [] as { x: number; y: number }[],
     };
 
-    const onMouseMove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) =>
+    {
       const r = canvas.getBoundingClientRect();
       s.mouseX = e.clientX - r.left;
       s.mouseY = e.clientY - r.top;
     };
-    const onTouchMove = (e: TouchEvent) => {
+    const onTouchMove = (e: TouchEvent) =>
+    {
       e.preventDefault();
       const r = canvas.getBoundingClientRect();
       s.mouseX = e.touches[0].clientX - r.left;
@@ -52,7 +57,8 @@ const LagCompCanvas = () => {
     let rafId: number;
     let last = performance.now();
 
-    const tick = (now: number) => {
+    const tick = (now: number) =>
+    {
       rafId = requestAnimationFrame(tick);
       if (!runningRef.current) return;
 
@@ -71,7 +77,8 @@ const LagCompCanvas = () => {
       /* Server: same cursor but delayed */
       const targetT = now - latencyRef.current;
       let sx = s.mouseX, sy = s.mouseY;
-      for (let i = s.history.length - 1; i >= 0; i--) {
+      for (let i = s.history.length - 1; i >= 0; i--)
+      {
         if (s.history[i].t <= targetT) { sx = s.history[i].x; sy = s.history[i].y; break; }
       }
       const as2 = 1 - Math.exp(-dt / 38);
@@ -88,10 +95,12 @@ const LagCompCanvas = () => {
       /* Grid */
       ctx.strokeStyle = 'rgba(0,190,215,0.055)';
       ctx.lineWidth = 1;
-      for (let x = 0; x <= W; x += 40) {
+      for (let x = 0; x <= W; x += 40)
+      {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
       }
-      for (let y = 0; y <= H; y += 40) {
+      for (let y = 0; y <= H; y += 40)
+      {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
       }
 
@@ -99,7 +108,8 @@ const LagCompCanvas = () => {
       const B = 14;
       ctx.strokeStyle = 'rgba(0,190,215,0.18)';
       ctx.lineWidth = 1;
-      ([[0, 0], [W, 0], [W, H], [0, H]] as [number, number][]).forEach(([cx, cy]) => {
+      ([[0, 0], [W, 0], [W, H], [0, H]] as [number, number][]).forEach(([cx, cy]) =>
+      {
         const sx2 = cx ? -1 : 1, sy2 = cy ? -1 : 1;
         ctx.beginPath();
         ctx.moveTo(cx, cy + sy2 * B);
@@ -110,10 +120,11 @@ const LagCompCanvas = () => {
 
       /* Reconciliation gap line */
       const gap = Math.hypot(s.clientX - s.serverX, s.clientY - s.serverY);
-      if (latencyRef.current > 15 && gap > 5) {
+      if (latencyRef.current > 15 && gap > 5)
+      {
         ctx.save();
         ctx.strokeStyle = 'rgba(255,145,55,0.55)';
-        ctx.lineWidth   = 1.5;
+        ctx.lineWidth = 1.5;
         ctx.setLineDash([3, 5]);
         ctx.beginPath();
         ctx.moveTo(s.clientX, s.clientY);
@@ -128,7 +139,8 @@ const LagCompCanvas = () => {
       }
 
       /* Client ghost trail */
-      s.trail.forEach((p, i) => {
+      s.trail.forEach((p, i) =>
+      {
         const t = i / s.trail.length;
         ctx.beginPath();
         ctx.arc(p.x, p.y, 5 * t, 0, Math.PI * 2);
@@ -137,31 +149,32 @@ const LagCompCanvas = () => {
       });
 
       /* Server dot */
-      if (latencyRef.current > 0) {
+      if (latencyRef.current > 0)
+      {
         ctx.beginPath();
         ctx.arc(s.serverX, s.serverY, 10, 0, Math.PI * 2);
-        ctx.fillStyle   = 'rgba(255,140,45,0.1)';
+        ctx.fillStyle = 'rgba(255,140,45,0.1)';
         ctx.strokeStyle = 'rgba(255,140,45,0.88)';
-        ctx.lineWidth   = 2;
+        ctx.lineWidth = 2;
         ctx.fill(); ctx.stroke();
         ctx.fillStyle = 'rgba(255,140,45,0.9)';
-        ctx.font      = '9px JetBrains Mono';
+        ctx.font = '9px JetBrains Mono';
         ctx.fillText('SERVER  AUTH', s.serverX + 14, s.serverY + 4);
       }
 
       /* Client dot */
       ctx.beginPath();
       ctx.arc(s.clientX, s.clientY, 10, 0, Math.PI * 2);
-      ctx.fillStyle   = 'rgba(0,200,230,0.12)';
+      ctx.fillStyle = 'rgba(0,200,230,0.12)';
       ctx.strokeStyle = 'rgba(0,200,230,0.95)';
-      ctx.lineWidth   = 2;
+      ctx.lineWidth = 2;
       ctx.fill(); ctx.stroke();
       ctx.shadowColor = 'rgba(0,200,230,0.5)';
-      ctx.shadowBlur  = 10;
+      ctx.shadowBlur = 10;
       ctx.stroke();
-      ctx.shadowBlur  = 0;
-      ctx.fillStyle   = 'rgba(0,200,230,0.9)';
-      ctx.font        = '9px JetBrains Mono';
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(0,200,230,0.9)';
+      ctx.font = '9px JetBrains Mono';
       ctx.fillText('CLIENT  PREDICTED', s.clientX + 14, s.clientY + 4);
 
       /* Latency readout */
@@ -171,7 +184,8 @@ const LagCompCanvas = () => {
     };
 
     rafId = requestAnimationFrame(tick);
-    return () => {
+    return () =>
+    {
       cancelAnimationFrame(rafId);
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('touchmove', onTouchMove);
@@ -203,7 +217,8 @@ const LagCompCanvas = () => {
   );
 };
 
-export default function Hero() {
+export default function Hero()
+{
   return (
     <section id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: 80 }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', padding: '80px 24px' }}>
@@ -247,7 +262,7 @@ export default function Hero() {
             </p>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a href="#work" style={{
+              <a href="/projects" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '11px 24px',
                 background: 'var(--color-tick)', color: 'var(--color-base)',

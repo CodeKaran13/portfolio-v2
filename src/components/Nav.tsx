@@ -18,11 +18,11 @@ const Monogram = ({ size = 32 }: { size?: number }) => (
 );
 
 const NAV_ITEMS = [
-  { label: 'Work', anchorHref: '#work', pageHref: '/projects' },
-  { label: 'Systems', anchorHref: '#systems', pageHref: '#systems' },
-  { label: 'Experience', anchorHref: '#experience', pageHref: '#experience' },
-  { label: 'Writing', anchorHref: '#writing', pageHref: '#writing' },
-  { label: 'Contact', anchorHref: '#contact', pageHref: '#contact' },
+  { label: 'Work', anchorHref: '#work', pageHref: '/#work' },
+  { label: 'Systems', anchorHref: '#systems', pageHref: '/#systems' },
+  { label: 'Experience', anchorHref: '#experience', pageHref: '/#experience' },
+  { label: 'Writing', anchorHref: '#writing', pageHref: '/#writing' },
+  { label: 'Contact', anchorHref: '#contact', pageHref: '/#contact' },
 ];
 
 export default function Nav()
@@ -44,23 +44,42 @@ export default function Nav()
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll-spy — home only; not called on mount to avoid pre-layout offsetTop=0 bug
+  // Scroll-spy — home only
   useEffect(() => {
     if (!isHome) {
       if (pathname.startsWith('/projects')) setActive('work');
+      else if (pathname.startsWith('/blogs')) setActive('writing');
+      else setActive('work');
       return;
     }
-    const onSpyScroll = () => {
-      const ids = NAV_ITEMS.map(n => n.label.toLowerCase());
-      let found = ids[0];
-      for (const id of ids) {
+
+    const validIds = NAV_ITEMS.map(n => n.label.toLowerCase());
+
+    const runSpy = () => {
+      // Guard: if the first section hasn't been laid out yet (offsetTop=0),
+      // all checks would pass and 'contact' would win — skip until layout is ready
+      const firstSection = document.getElementById(validIds[0]);
+      if (!firstSection || firstSection.offsetTop === 0) return;
+      let found = validIds[0];
+      for (const id of validIds) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 140) found = id;
       }
       setActive(found);
     };
-    window.addEventListener('scroll', onSpyScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onSpyScroll);
+
+    // Seed directly from hash — no layout needed, instant correct highlight
+    const hash = window.location.hash.slice(1);
+    if (hash && validIds.includes(hash)) setActive(hash);
+
+    // One-shot sync after layout + hash-scroll both settle (two frames)
+    const raf = requestAnimationFrame(() => requestAnimationFrame(runSpy));
+
+    window.addEventListener('scroll', runSpy, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', runSpy);
+    };
   }, [isHome, pathname]);
 
   useEffect(() => {

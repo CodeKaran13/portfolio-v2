@@ -62,6 +62,24 @@ export interface ContactLink {
   hud: string;
 }
 
+export type ContentBlock =
+  | { type: 'p'; text: string }
+  | { type: 'h2'; text: string }
+  | { type: 'h3'; text: string }
+  | { type: 'ul'; items: string[] }
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  subtitle: string;
+  tag: string;
+  tagColor: string;
+  readTime: string;
+  engine: string;
+  summary: string;
+  content: ContentBlock[];
+}
+
 export interface CaseStudySubSection {
   title: string;
   intro?: string;
