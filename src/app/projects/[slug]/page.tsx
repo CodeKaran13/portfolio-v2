@@ -18,6 +18,11 @@ export async function generateMetadata(
   return {
     title: `${project.title} — Karan Nandkar`,
     description: project.summary,
+    openGraph: {
+      title: `${project.title} — Karan Nandkar`,
+      description: project.summary,
+      url: `https://codekarangames.dev/projects/${slug}`,
+    },
   };
 }
 
@@ -278,7 +283,7 @@ export default async function ProjectCaseStudy(
     return (
       <main style={{ padding: '100px 24px 80px', minHeight: '100vh' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div className="hud-label" style={{ marginBottom: 12 }}>// CASE STUDY</div>
+          <div className="hud-label" style={{ marginBottom: 12 }}>{'// CASE STUDY'}</div>
           <h1 style={{
             fontFamily: 'var(--font-mono)', fontWeight: 700,
             fontSize: 'clamp(24px, 3vw, 36px)',
@@ -329,7 +334,7 @@ export default async function ProjectCaseStudy(
         {/* ── Hero ── */}
         <div style={{ marginTop: 40 }}>
           <div className="hud-label" style={{ marginBottom: 10, color: 'var(--color-tick)', opacity: 0.7 }}>
-            // CASE STUDY
+            {'// CASE STUDY'}
           </div>
           <div style={{
             width: 48, height: 2,
@@ -587,7 +592,7 @@ export default async function ProjectCaseStudy(
             ← Back to Projects
           </Link>
           <span className="hud-label" style={{ color: 'var(--color-hud)' }}>
-            // {project.codename} · {project.year}
+            {`// ${project.codename} · ${project.year}`}
           </span>
         </div>
 

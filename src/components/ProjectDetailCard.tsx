@@ -26,6 +26,7 @@ export default function ProjectDetailCard({ project }: { project: Project }) {
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setReducedMotion(mq.matches);
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mq.addEventListener('change', handler);
@@ -163,7 +164,7 @@ export default function ProjectDetailCard({ project }: { project: Project }) {
 
         {/* Owned */}
         <div>
-          <div className="hud-label" style={{ marginBottom: 10 }}>// OWNED</div>
+          <div className="hud-label" style={{ marginBottom: 10 }}>{'// OWNED'}</div>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
             {project.owned.map((item, i) => (
               <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
@@ -177,7 +178,7 @@ export default function ProjectDetailCard({ project }: { project: Project }) {
         {/* Key Decisions */}
         {project.decisions.length > 0 && (
           <div>
-            <div className="hud-label" style={{ marginBottom: 10 }}>// KEY DECISIONS</div>
+            <div className="hud-label" style={{ marginBottom: 10 }}>{'// KEY DECISIONS'}</div>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {project.decisions.map((d, i) => (
                 <li key={i}>

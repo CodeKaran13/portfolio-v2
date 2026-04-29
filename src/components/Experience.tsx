@@ -47,7 +47,7 @@ export default function Experience() {
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         <div style={{ marginBottom: 56 }}>
-          <div className="hud-label" style={{ marginBottom: 10 }}>// 03 · EXPERIENCE</div>
+          <div className="hud-label" style={{ marginBottom: 10 }}>{'// 03 · EXPERIENCE'}</div>
           <h2 style={{
             fontFamily: 'var(--font-mono)', fontWeight: 700,
             fontSize: 'clamp(28px, 3.5vw, 44px)',

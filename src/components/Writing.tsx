@@ -10,7 +10,7 @@ export default function Writing() {
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         <div style={{ marginBottom: 56 }}>
-          <div className="hud-label" style={{ marginBottom: 10 }}>// 04 · WRITING &amp; CASE STUDIES</div>
+          <div className="hud-label" style={{ marginBottom: 10 }}>{'// 04 · WRITING & CASE STUDIES'}</div>
           <h2 style={{
             fontFamily: 'var(--font-mono)', fontWeight: 700,
             fontSize: 'clamp(28px, 3.5vw, 44px)',

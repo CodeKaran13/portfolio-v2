@@ -12,7 +12,7 @@ export default function BlogsPage() {
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 100px' }}>
 
         <div style={{ marginBottom: 56 }}>
-          <div className="hud-label" style={{ marginBottom: 10 }}>// WRITING</div>
+          <div className="hud-label" style={{ marginBottom: 10 }}>{'// WRITING'}</div>
           <h1 style={{
             fontFamily: 'var(--font-mono)', fontWeight: 700,
             fontSize: 'clamp(28px, 3.5vw, 44px)',

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const LagCompCanvas = () =>
 {
@@ -262,7 +263,7 @@ export default function Hero()
             </p>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a href="/projects" style={{
+              <Link href="/projects" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '11px 24px',
                 background: 'var(--color-tick)', color: 'var(--color-base)',
@@ -274,7 +275,7 @@ export default function Hero()
                 onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 20px rgba(0,200,220,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}>
                 View shipped work →
-              </a>
+              </Link>
               <a href="/karan-nandkar-cv.pdf" download="Karan_Nandkar_CV.pdf" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '11px 24px',

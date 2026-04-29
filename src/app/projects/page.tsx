@@ -17,7 +17,7 @@ export default function ProjectsPage() {
 
         {/* Page header */}
         <div style={{ marginBottom: 56 }}>
-          <div className="hud-label" style={{ marginBottom: 10 }}>// PROJECTS</div>
+          <div className="hud-label" style={{ marginBottom: 10 }}>{'// PROJECTS'}</div>
           <h1 style={{
             fontFamily: 'var(--font-mono)', fontWeight: 700,
             fontSize: 'clamp(28px, 3.5vw, 44px)',

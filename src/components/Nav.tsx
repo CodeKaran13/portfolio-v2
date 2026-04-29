@@ -47,9 +47,10 @@ export default function Nav()
   // Scroll-spy — home only
   useEffect(() => {
     if (!isHome) {
-      if (pathname.startsWith('/projects')) setActive('work');
-      else if (pathname.startsWith('/blogs')) setActive('writing');
-      else setActive('work');
+      const section = pathname.startsWith('/projects') ? 'work'
+        : pathname.startsWith('/blogs') ? 'writing'
+        : 'work';
+      setActive(section); // eslint-disable-line react-hooks/set-state-in-effect
       return;
     }
 

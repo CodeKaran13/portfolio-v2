@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-function HoverLink({ href, children, align = 'left' }: { href: string; children: React.ReactNode; align?: 'left' | 'right' }) {
+function HoverLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link href={href}
       style={{

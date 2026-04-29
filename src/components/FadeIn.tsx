@@ -15,6 +15,7 @@ export default function FadeIn({ children, delay = 0 }: FadeInProps) {
     const el = ref.current;
     if (!el) return;
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (mediaQuery.matches) { setVisible(true); return; }
 
     const rect = el.getBoundingClientRect();

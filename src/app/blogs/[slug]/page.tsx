@@ -11,7 +11,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = BLOG_POSTS.find(p => p.slug === slug);
   if (!post) return {};
-  return { title: `${post.title} — Karan Nandkar`, description: post.summary };
+  return {
+    title: `${post.title} — Karan Nandkar`,
+    description: post.summary,
+    openGraph: {
+      title: `${post.title} — Karan Nandkar`,
+      description: post.summary,
+      url: `https://codekarangames.dev/blogs/${slug}`,
+    },
+  };
 }
 
 function renderBlock(block: ContentBlock, i: number) {
