@@ -275,7 +275,7 @@ export default function Hero()
                 onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}>
                 View shipped work →
               </a>
-              <a href="https://codekarangames.dev" target="_blank" rel="noopener noreferrer" style={{
+              <a href="/karan-nandkar-cv.pdf" download="Karan_Nandkar_CV.pdf" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '11px 24px',
                 border: '1px solid var(--color-border)', color: 'var(--color-text)',
