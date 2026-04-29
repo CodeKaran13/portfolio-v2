@@ -1,78 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import type { Project } from '@/lib/types';
+import { PROJECTS } from '@/lib/data/projects';
 
-const PROJECTS: Project[] = [
-  {
-    codename: 'ECORUN',
-    engine: 'Unity',
-    engineColor: 'rgba(140,200,255,0.9)',
-    title: 'EcoRun',
-    role: 'Lead Gameplay Engineer',
-    platform: 'Mobile · Android',
-    year: '2024',
-    status: 'Live on Play Store',
-    bullets: [
-      'Architected modular endless-runner systems supporting deterministic spawning and PlayFab-driven progression',
-      'Built reusable player and progression frameworks designed for multi-season content expansion',
-      'Shipped to Play Store with stable mobile performance across low-end Android devices',
-    ],
-    tags: ['Unity', 'C#', 'PlayFab', 'Android'],
-    caseStudy: 'https://blog.codekarangames.dev',
-  },
-  {
-    codename: 'YKR',
-    engine: 'Unreal Engine 5',
-    engineColor: 'rgba(255,160,80,0.9)',
-    title: 'Yaaro Ki Rasoi',
-    role: 'Senior Gameplay Engineer · Perf Lead',
-    platform: 'Mobile / PC',
-    year: '2024',
-    status: 'Live on Play Store',
-    bullets: [
-      'Resolved Tick-heavy gameplay bottlenecks and world-space widget costs on UE5 mobile, restoring target framerate',
-      'Owned interaction system architecture for kitchen simulation across hundreds of interactable objects',
-      'Optimized FX and runtime stability without compromising gameplay responsiveness',
-    ],
-    tags: ['Unreal Engine 5', 'C++', 'Blueprints', 'Mobile'],
-    caseStudy: 'https://blog.codekarangames.dev',
-  },
-  {
-    codename: 'BULLBASH',
-    engine: 'Unity',
-    engineColor: 'rgba(140,200,255,0.9)',
-    title: 'BullBash',
-    role: 'Multiplayer Systems Engineer',
-    platform: 'Mobile · PvP',
-    year: '2023',
-    status: 'Shipped',
-    bullets: [
-      'Built real-time PvP architecture inspired by Clash Royale with synchronization reliability and lag compensation',
-      'Designed strategic power-up and ability systems for fast-paced 1v1 matches',
-      'Engineered server-authoritative gameplay loops resilient to network jitter',
-    ],
-    tags: ['Unity', 'C#', 'Multiplayer', 'Custom Netcode'],
-    caseStudy: 'https://blog.codekarangames.dev',
-  },
-  {
-    codename: 'TANKZ',
-    engine: 'Unity',
-    engineColor: 'rgba(140,200,255,0.9)',
-    title: '4v4 Tankz N Glory',
-    role: 'Multiplayer Gameplay Engineer',
-    platform: 'Mobile · 4v4 Shooter',
-    year: '2023',
-    status: 'Shipped',
-    bullets: [
-      'Built ability and inventory architecture for team-based 4v4 tank combat',
-      'Engineered server-authoritative synchronization for fair real-time gameplay',
-      'Designed progression and customization systems supporting long-term player retention',
-    ],
-    tags: ['Unity', 'C#', 'Multiplayer', 'Mobile'],
-    caseStudy: 'https://blog.codekarangames.dev',
-  },
-];
+const FEATURED = PROJECTS.slice(0, 2);
 
 const Tag = ({ label }: { label: string }) => (
   <span style={{
@@ -147,7 +80,8 @@ const MediaPlaceholder = ({ codename }: { codename: string }) => (
   </div>
 );
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project }: { project: Project }) =>
+{
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -199,7 +133,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
 
         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-          {project.bullets.map((b, i) => (
+          {project.owned.map((b, i) => (
             <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-tick)', flexShrink: 0, marginTop: 2, opacity: 0.7 }}>›</span>
               <span style={{ fontSize: 13.5, color: 'var(--color-text-dim)', lineHeight: 1.6 }}>{b}</span>
@@ -211,7 +145,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {project.tags.map(t => <Tag key={t} label={t} />)}
           </div>
-          <a href={project.caseStudy} target="_blank" rel="noopener noreferrer"
+          <Link href={project.links.caseStudy}
             style={{
               fontFamily: 'var(--font-mono)', fontSize: 12,
               color: 'var(--color-tick)', textDecoration: 'none',
@@ -222,7 +156,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             onMouseEnter={e => { e.currentTarget.style.gap = '8px'; }}
             onMouseLeave={e => { e.currentTarget.style.gap = '4px'; }}>
             Case study →
-          </a>
+          </Link>
         </div>
 
       </div>
@@ -230,7 +164,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-export default function Work() {
+export default function Work()
+{
   return (
     <section id="work" style={{ padding: '100px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -252,7 +187,33 @@ export default function Work() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))',
           gap: 20,
         }}>
-          {PROJECTS.map(p => <ProjectCard key={p.codename} project={p} />)}
+          {FEATURED.map(p => <ProjectCard key={p.codename} project={p} />)}
+        </div>
+
+        {/* View all button */}
+        <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center' }}>
+          <Link href="/projects" style={{
+            fontFamily: 'var(--font-mono)', fontSize: 13,
+            padding: '10px 24px',
+            border: '1px solid var(--color-border)',
+            borderRadius: 2,
+            color: 'var(--color-tick)',
+            textDecoration: 'none',
+            letterSpacing: '0.05em',
+            transition: 'border-color 0.2s, box-shadow 0.2s',
+          }}
+            onMouseEnter={e =>
+            {
+              e.currentTarget.style.borderColor = 'var(--color-tick)';
+              e.currentTarget.style.boxShadow = '0 0 12px rgba(0,200,220,0.15)';
+            }}
+            onMouseLeave={e =>
+            {
+              e.currentTarget.style.borderColor = 'var(--color-border)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}>
+            All Shipped Games →
+          </Link>
         </div>
 
         <div style={{

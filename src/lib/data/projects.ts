@@ -1,0 +1,146 @@
+import type { Project } from '@/lib/types';
+
+export const PROJECTS: Project[] = [
+  {
+    slug: 'ecorun',
+    codename: 'ECORUN',
+    title: 'EcoRun',
+    role: 'Senior Gameplay Engineer',
+    engine: 'Unity',
+    engineColor: 'rgba(140,200,255,0.9)',
+    platform: 'Mobile · Android',
+    year: 2025,
+    status: 'Live on Play Store',
+    summary:
+      'Built scalable endless runner architecture with modular gameplay systems, progression systems, and long-term live content expansion.',
+    owned: [
+      'Player movement systems',
+      'Modular obstacle spawning',
+      'Collectible and power-up systems',
+      'Live progression architecture',
+      'Performance optimization',
+    ],
+    decisions: [
+      { title: 'Static player + moving world architecture', rationale: '' },
+      { title: 'SOLID-based controller refactor', rationale: '' },
+      { title: 'Power-up driven airborne coin spawning', rationale: '' },
+      { title: 'Scalable content system for long-term updates', rationale: '' },
+    ],
+    tags: ['Unity', 'C#', 'PlayFab', 'Android'],
+    media: {
+      image: '/projects/ecorun/cover.png',
+    },
+    links: {
+      caseStudy: '/projects/ecorun',
+      gameplay: '#',
+    },
+  },
+  {
+    slug: 'ykr',
+    codename: 'YKR',
+    title: 'Yaaro Ki Rasoi',
+    role: 'Senior Gameplay Engineer',
+    engine: 'Unreal Engine 5',
+    engineColor: 'rgba(255,160,80,0.9)',
+    platform: 'Mobile · Android',
+    year: 2025,
+    status: 'Live on Play Store',
+    summary:
+      'Built multiplayer-ready gameplay systems, progression architecture, and production-critical engineering workflows for a live mobile cooking game focused on scalable content delivery and long-term maintainability.',
+    owned: [
+      'Core gameplay systems',
+      'Multiplayer gameplay flow support',
+      'Session/state management',
+      'Live progression architecture',
+      'Performance optimization',
+      'Production debugging and issue resolution',
+    ],
+    decisions: [
+      { title: 'Modular gameplay architecture for scalable content updates', rationale: '' },
+      { title: 'State-driven gameplay flow for stable multiplayer sessions', rationale: '' },
+      { title: 'Reduced runtime coupling for easier live operations support', rationale: '' },
+      { title: 'Performance-first implementation for mobile consistency', rationale: '' },
+    ],
+    tags: ['Unreal Engine 5', 'C++', 'Blueprints', 'Mobile'],
+    media: {
+      image: '/projects/ykr/cover.png',
+    },
+    links: {
+      caseStudy: '/projects/ykr',
+      gameplay: '#',
+    },
+  },
+  {
+    slug: 'bullbash',
+    codename: 'BULLBASH',
+    title: 'BullBash',
+    role: 'Multiplayer Systems Engineer',
+    engine: 'Unity',
+    engineColor: 'rgba(140,200,255,0.9)',
+    platform: 'Mobile · PvP',
+    year: 2023,
+    status: 'Shipped',
+    summary:
+      'A fast-paced, bull-themed PvP strategy game inspired by Clash Royale, focused on real-time multiplayer battles, network optimization, and dynamic mid-match decision making.',
+    owned: [
+      'Core combat gameplay systems',
+      'Enemy interaction and collision systems',
+      'Player control responsiveness',
+      'Progression and reward systems',
+      'Performance optimization for mobile',
+      'Gameplay debugging and balancing',
+    ],
+    decisions: [
+      { title: 'Event-driven combat flow for cleaner gameplay state handling', rationale: '' },
+      { title: 'Reduced input latency focus for stronger gameplay responsiveness', rationale: '' },
+      { title: 'Lightweight collision and interaction logic for mobile performance', rationale: '' },
+      { title: 'Modular progression systems for scalable live content support', rationale: '' },
+    ],
+    tags: ['Unity', 'C#', 'Multiplayer', 'Custom Netcode'],
+    media: {
+      image: '/projects/bullbash/cover.svg',
+    },
+    links: {
+      caseStudy: '/projects/bullbash',
+      gameplay: '#',
+    },
+  },
+  {
+    slug: 'tankz',
+    codename: 'TANKZ',
+    title: '4v4 Tankz N Glory',
+    role: 'Multiplayer Gameplay Engineer',
+    engine: 'Unity',
+    engineColor: 'rgba(140,200,255,0.9)',
+    platform: 'Mobile · 4v4 Shooter',
+    year: 2023,
+    status: 'Shipped',
+    summary:
+      'Built real-time combat systems, inventory architecture, progression systems, and player economy workflows for a mobile tank combat game focused on scalable gameplay progression and long-term player retention.',
+    owned: [
+      'Projectile and shooting systems',
+      'Enemy interaction and hit detection',
+      'Inventory system for multiple tank ownership',
+      'Marketplace system for purchasing and upgrading tanks',
+      'Attribute system (Attack, Defense, Speed, Crit)',
+      'Tank class architecture (Support, Sniper, Assault)',
+      'Tank repair and scrap systems',
+      'Performance optimization for mobile devices',
+    ],
+    decisions: [
+      { title: 'Modular inventory architecture for scalable tank expansion', rationale: '' },
+      { title: 'Attribute-driven tank progression system for strategic gameplay depth', rationale: '' },
+      { title: 'Class-based tank design for clearer combat role differentiation', rationale: '' },
+      { title: 'Marketplace and repair/scrap workflow for long-term retention loops', rationale: '' },
+      { title: 'Lightweight combat and collision systems for stable mobile performance', rationale: '' },
+    ],
+    tags: ['Unity', 'C#', 'Multiplayer', 'Mobile'],
+    media: {
+      image: '/projects/tankz/cover.svg',
+    },
+    links: {
+      caseStudy: '/projects/tankz',
+      gameplay: '#',
+    },
+  },
+];

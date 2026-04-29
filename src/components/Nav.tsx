@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 
 const Monogram = ({ size = 32 }: { size?: number }) => (
@@ -16,15 +18,18 @@ const Monogram = ({ size = 32 }: { size?: number }) => (
 );
 
 const NAV_ITEMS = [
-  { label: 'Work', href: '#work' },
-  { label: 'Systems', href: '#systems' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Writing', href: '#writing' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Work', anchorHref: '#work', pageHref: '/projects' },
+  { label: 'Systems', anchorHref: '#systems', pageHref: '#systems' },
+  { label: 'Experience', anchorHref: '#experience', pageHref: '#experience' },
+  { label: 'Writing', anchorHref: '#writing', pageHref: '#writing' },
+  { label: 'Contact', anchorHref: '#contact', pageHref: '#contact' },
 ];
 
 export default function Nav()
 {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
   const [active, setActive] = useState('work');
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -32,31 +37,37 @@ export default function Nav()
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const listRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() =>
-  {
-    const onScroll = () =>
-    {
-      setScrolled(window.scrollY > 60);
+  // Scrolled state — runs on all pages
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Scroll-spy — home only; not called on mount to avoid pre-layout offsetTop=0 bug
+  useEffect(() => {
+    if (!isHome) {
+      if (pathname.startsWith('/projects')) setActive('work');
+      return;
+    }
+    const onSpyScroll = () => {
       const ids = NAV_ITEMS.map(n => n.label.toLowerCase());
       let found = ids[0];
-      for (const id of ids)
-      {
+      for (const id of ids) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 140) found = id;
       }
       setActive(found);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    window.addEventListener('scroll', onSpyScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onSpyScroll);
+  }, [isHome, pathname]);
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     const idx = NAV_ITEMS.findIndex(n => n.label.toLowerCase() === active);
     const el = itemRefs.current[idx];
     const list = listRef.current;
-    if (el && list)
-    {
+    if (el && list) {
       const er = el.getBoundingClientRect();
       const lr = list.getBoundingClientRect();
       setIndicator({ left: er.left - lr.left, width: er.width, ready: true });
@@ -80,7 +91,7 @@ export default function Nav()
         }}>
 
           {/* Logo */}
-          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <Monogram size={scrolled ? 26 : 30} />
             <div>
               <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 13, color: 'var(--color-text)', lineHeight: 1.2 }}>
@@ -88,26 +99,38 @@ export default function Nav()
               </div>
               <div className="hud-label" style={{ marginTop: 1 }}>Senior Gameplay Engineer</div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav aria-label="Main navigation" className="hidden md:block">
             <div ref={listRef} style={{ display: 'flex', position: 'relative', gap: 2 }}>
-              {NAV_ITEMS.map((item, i) => (
-                <a key={item.label}
-                  ref={el => { itemRefs.current[i] = el; }}
-                  href={item.href}
-                  style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 13,
-                    padding: '6px 14px',
-                    color: active === item.label.toLowerCase() ? 'var(--color-tick)' : 'var(--color-text-dim)',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s',
-                    position: 'relative', zIndex: 1,
-                  }}>
-                  {item.label}
-                </a>
-              ))}
+              {NAV_ITEMS.map((item, i) => {
+                const href = isHome ? item.anchorHref : item.pageHref;
+                const isActive = active === item.label.toLowerCase();
+                const commonStyle = {
+                  fontFamily: 'var(--font-mono)', fontSize: 13,
+                  padding: '6px 14px',
+                  color: isActive ? 'var(--color-tick)' : 'var(--color-text-dim)',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s',
+                  position: 'relative' as const, zIndex: 1,
+                };
+                return href.startsWith('/') ? (
+                  <Link key={item.label}
+                    ref={el => { itemRefs.current[i] = el; }}
+                    href={href}
+                    style={commonStyle}>
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a key={item.label}
+                    ref={el => { itemRefs.current[i] = el; }}
+                    href={href}
+                    style={commonStyle}>
+                    {item.label}
+                  </a>
+                );
+              })}
               {indicator.ready && (
                 <div style={{
                   position: 'absolute', bottom: 0,
@@ -168,19 +191,26 @@ export default function Nav()
             </button>
           </div>
           <nav style={{ display: 'flex', flexDirection: 'column' }}>
-            {NAV_ITEMS.map(item => (
-              <a key={item.label} href={item.href} onClick={() => setMobileOpen(false)}
-                style={{
-                  fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 600,
-                  color: 'var(--color-text)', textDecoration: 'none',
-                  padding: '14px 0',
-                  borderBottom: '1px solid var(--color-border-subtle)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                }}>
-                {item.label}
-                <span style={{ color: 'var(--color-tick)', fontSize: 20 }}>→</span>
-              </a>
-            ))}
+            {NAV_ITEMS.map(item => {
+              const href = isHome ? item.anchorHref : item.pageHref;
+              const commonStyle = {
+                fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 600,
+                color: 'var(--color-text)', textDecoration: 'none',
+                padding: '14px 0',
+                borderBottom: '1px solid var(--color-border-subtle)',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              } as const;
+              const chevron = <span style={{ color: 'var(--color-tick)', fontSize: 20 }}>→</span>;
+              return href.startsWith('/') ? (
+                <Link key={item.label} href={href} onClick={() => setMobileOpen(false)} style={commonStyle}>
+                  {item.label}{chevron}
+                </Link>
+              ) : (
+                <a key={item.label} href={href} onClick={() => setMobileOpen(false)} style={commonStyle}>
+                  {item.label}{chevron}
+                </a>
+              );
+            })}
           </nav>
           <div style={{ marginTop: 'auto' }}>
             <div className="hud-label">Mumbai, India · Remote / Visa-sponsored relocation</div>
