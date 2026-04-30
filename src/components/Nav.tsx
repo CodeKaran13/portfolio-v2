@@ -38,31 +38,36 @@ export default function Nav()
   const listRef = useRef<HTMLDivElement>(null);
 
   // Scrolled state — runs on all pages
-  useEffect(() => {
+  useEffect(() =>
+  {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Scroll-spy — home only
-  useEffect(() => {
-    if (!isHome) {
+  useEffect(() =>
+  {
+    if (!isHome)
+    {
       const section = pathname.startsWith('/projects') ? 'work'
         : pathname.startsWith('/blogs') ? 'writing'
-        : 'work';
+          : 'work';
       setActive(section); // eslint-disable-line react-hooks/set-state-in-effect
       return;
     }
 
     const validIds = NAV_ITEMS.map(n => n.label.toLowerCase());
 
-    const runSpy = () => {
+    const runSpy = () =>
+    {
       // Guard: if the first section hasn't been laid out yet (offsetTop=0),
       // all checks would pass and 'contact' would win — skip until layout is ready
       const firstSection = document.getElementById(validIds[0]);
       if (!firstSection || firstSection.offsetTop === 0) return;
       let found = validIds[0];
-      for (const id of validIds) {
+      for (const id of validIds)
+      {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 140) found = id;
       }
@@ -77,17 +82,20 @@ export default function Nav()
     const raf = requestAnimationFrame(() => requestAnimationFrame(runSpy));
 
     window.addEventListener('scroll', runSpy, { passive: true });
-    return () => {
+    return () =>
+    {
       cancelAnimationFrame(raf);
       window.removeEventListener('scroll', runSpy);
     };
   }, [isHome, pathname]);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const idx = NAV_ITEMS.findIndex(n => n.label.toLowerCase() === active);
     const el = itemRefs.current[idx];
     const list = listRef.current;
-    if (el && list) {
+    if (el && list)
+    {
       const er = el.getBoundingClientRect();
       const lr = list.getBoundingClientRect();
       setIndicator({ left: er.left - lr.left, width: er.width, ready: true });
@@ -124,7 +132,8 @@ export default function Nav()
           {/* Desktop nav */}
           <nav aria-label="Main navigation" className="hidden md:block">
             <div ref={listRef} style={{ display: 'flex', position: 'relative', gap: 2 }}>
-              {NAV_ITEMS.map((item, i) => {
+              {NAV_ITEMS.map((item, i) =>
+              {
                 const href = isHome ? item.anchorHref : item.pageHref;
                 const isActive = active === item.label.toLowerCase();
                 const commonStyle = {
@@ -179,7 +188,7 @@ export default function Nav()
                 animation: 'pulse-dot 2.2s ease-in-out infinite',
               }} />
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-tick)', letterSpacing: '0.06em' }}>
-                Open · Senior / Lead roles · Remote / Relocate
+                Open · Senior / Lead roles · Onsite / Remote / Relocate
               </span>
             </div>
             <button className="md:hidden"
@@ -211,7 +220,8 @@ export default function Nav()
             </button>
           </div>
           <nav style={{ display: 'flex', flexDirection: 'column' }}>
-            {NAV_ITEMS.map(item => {
+            {NAV_ITEMS.map(item =>
+            {
               const href = isHome ? item.anchorHref : item.pageHref;
               const commonStyle = {
                 fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 600,

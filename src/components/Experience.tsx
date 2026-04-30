@@ -4,8 +4,8 @@ const ROLES: Role[] = [
   {
     title: 'Senior Game Developer',
     company: 'P99SOFT',
-    period: '2023 — Present',
-    type: 'Full-time',
+    period: '2023 — 2026',
+    type: '3 years',
     bullets: [
       'Lead gameplay direction across Unity and UE5 mobile titles',
       'Owned EcoRun (Unity, Android) and Yaaro Ki Rasoi (UE5, Mobile/PC) end-to-end',
@@ -16,7 +16,7 @@ const ROLES: Role[] = [
   },
   {
     title: 'SDE 3 / Game Developer',
-    company: 'Loco',
+    company: 'LOCO',
     period: '2019 — 2023',
     type: '4 years',
     bullets: [
@@ -41,7 +41,8 @@ const ROLES: Role[] = [
   },
 ];
 
-export default function Experience() {
+export default function Experience()
+{
   return (
     <section id="experience" style={{ padding: '100px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>

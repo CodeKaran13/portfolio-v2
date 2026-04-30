@@ -3,10 +3,10 @@
 import type { ContactLink } from '@/lib/types';
 
 const LINKS: ContactLink[] = [
-  { label: 'Email',    value: 'knandkar007@gmail.com',        href: 'mailto:knandkar007@gmail.com',   hud: 'PRIMARY' },
+  { label: 'Email', value: 'knandkar007@gmail.com', href: 'mailto:knandkar007@gmail.com', hud: 'PRIMARY' },
   { label: 'LinkedIn', value: 'linkedin.com/in/karannandkar', href: 'https://linkedin.com/in/karannandkar/', hud: 'PROFILE' },
-  { label: 'GitHub',   value: 'github.com/CodeKaran13',       href: 'https://github.com/CodeKaran13', hud: 'CODE'    },
-  { label: 'Phone',    value: '+91 77100 37151',              href: 'tel:+917710037151',               hud: 'MOBILE'  },
+  { label: 'GitHub', value: 'github.com/CodeKaran13', href: 'https://github.com/CodeKaran13', hud: 'CODE' },
+  { label: 'Phone', value: '+91 77100 37151', href: 'tel:+917710037151', hud: 'MOBILE' },
 ];
 
 const ContactLinkRow = ({ link }: { link: ContactLink }) => (
@@ -23,12 +23,14 @@ const ContactLinkRow = ({ link }: { link: ContactLink }) => (
       transition: 'border-color 0.25s, transform 0.25s var(--ease-out-expo), box-shadow 0.25s',
       gap: 16,
     }}
-    onMouseEnter={e => {
+    onMouseEnter={e =>
+    {
       e.currentTarget.style.borderColor = 'var(--color-tick)';
       e.currentTarget.style.transform = 'translateX(4px)';
       e.currentTarget.style.boxShadow = '0 0 16px rgba(0,200,220,0.1)';
     }}
-    onMouseLeave={e => {
+    onMouseLeave={e =>
+    {
       e.currentTarget.style.borderColor = 'var(--color-border)';
       e.currentTarget.style.transform = 'none';
       e.currentTarget.style.boxShadow = 'none';
@@ -52,7 +54,8 @@ const ContactLinkRow = ({ link }: { link: ContactLink }) => (
   </a>
 );
 
-export default function Contact() {
+export default function Contact()
+{
   return (
     <section id="contact" style={{ padding: '100px 24px 120px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -93,10 +96,10 @@ export default function Contact() {
                 <span className="hud-label" style={{ color: 'var(--color-tick)' }}>AVAILABILITY STATUS</span>
               </div>
               <p style={{ fontSize: 15, color: 'var(--color-text)', lineHeight: 1.7 }}>
-                Open to <strong style={{ color: 'var(--color-tick)' }}>Senior and Lead Gameplay Engineering</strong> roles.
-                Remote-from-India and visa-sponsored relocation both welcome.
+                Open to <strong style={{ color: 'var(--color-tick)' }}>Senior and Lead Gameplay Engineering</strong> roles.<br />
+                Onsite / Remote in India and visa-sponsored relocation both welcome.
               </p>
-              <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--color-border-subtle)' }}>
+              {/* <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--color-border-subtle)' }}>
                 <div className="hud-label" style={{ marginBottom: 6 }}>TARGETING</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {['Ubisoft', 'Larian', 'CD Projekt', 'Riot', 'Sumo', 'Build A Rocket Boy', 'Keywords'].map(s => (
@@ -110,7 +113,7 @@ export default function Contact() {
                     }}>{s}</span>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div style={{

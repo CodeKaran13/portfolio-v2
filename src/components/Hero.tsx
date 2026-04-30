@@ -229,7 +229,7 @@ export default function Hero()
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 20 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-xp)', flexShrink: 0, boxShadow: '0 0 6px var(--color-xp)' }} />
-              <span className="hud-label">Mumbai, India · Open to remote and visa-sponsored relocation</span>
+              <span className="hud-label">Pune, India · Open to onsite, remote, and visa-sponsored relocation</span>
             </div>
 
             <h1 style={{
