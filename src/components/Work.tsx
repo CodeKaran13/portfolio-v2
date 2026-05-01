@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import type { Project } from '@/lib/types';
@@ -31,56 +32,44 @@ const EngineBadge = ({ engine, color }: { engine: string; color: string }) => (
   }}>{engine}</span>
 );
 
-const MediaPlaceholder = ({ codename }: { codename: string }) => (
-  <div style={{
-    position: 'relative',
-    width: '100%', height: 180,
-    background: 'var(--color-base)',
-    overflow: 'hidden',
-    borderBottom: '1px solid var(--color-border)',
-    flexShrink: 0,
-  }}>
-    <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
-      <defs>
-        <pattern id={`stripe-${codename}`} x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="6" height="12" fill="rgba(255,255,255,0.025)" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill={`url(#stripe-${codename})`} />
-    </svg>
-    <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }} fill="none">
-      {([
-        ['12,8', '8,8', '8,20'],
-        ['calc(100% - 12px),8', 'calc(100% - 8px),8', 'calc(100% - 8px),20'],
-        ['12,calc(100% - 8px)', '8,calc(100% - 8px)', '8,calc(100% - 20px)'],
-        ['calc(100% - 12px),calc(100% - 8px)', 'calc(100% - 8px),calc(100% - 8px)', 'calc(100% - 8px),calc(100% - 20px)'],
-      ] as [string, string, string][]).map(([a, b, c], i) => (
-        <polyline key={i} points={`${a} ${b} ${c}`}
-          stroke="rgba(0,200,220,0.25)" strokeWidth="1.5" strokeLinecap="square" />
-      ))}
-    </svg>
+const CardMedia = ({ project, priority }: { project: Project; priority?: boolean }) =>
+{
+  const isSvg = project.media.image.endsWith('.svg');
+  return (
     <div style={{
-      position: 'absolute', inset: 0,
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: 8,
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '16 / 9',
+      overflow: 'hidden',
+      borderBottom: '1px solid var(--color-border)',
+      flexShrink: 0,
+      background: 'var(--color-base)',
     }}>
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.3">
-        <rect x="2" y="6" width="28" height="20" rx="2" stroke="var(--color-tick)" strokeWidth="1.2" />
-        <circle cx="10" cy="13" r="3" stroke="var(--color-tick)" strokeWidth="1.2" />
-        <polyline points="2,24 10,16 16,22 22,16 30,24" stroke="var(--color-tick)" strokeWidth="1.2" fill="none" strokeLinejoin="round" />
+      <Image
+        src={project.media.image}
+        alt={project.title}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        style={{ objectFit: 'cover' }}
+        unoptimized={isSvg}
+        priority={priority}
+      />
+      <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} fill="none">
+        {([
+          ['12,8', '8,8', '8,20'],
+          ['calc(100% - 12px),8', 'calc(100% - 8px),8', 'calc(100% - 8px),20'],
+          ['12,calc(100% - 8px)', '8,calc(100% - 8px)', '8,calc(100% - 20px)'],
+          ['calc(100% - 12px),calc(100% - 8px)', 'calc(100% - 8px),calc(100% - 8px)', 'calc(100% - 8px),calc(100% - 20px)'],
+        ] as [string, string, string][]).map(([a, b, c], i) => (
+          <polyline key={i} points={`${a} ${b} ${c}`}
+            stroke="rgba(0,200,220,0.25)" strokeWidth="1.5" strokeLinecap="square" />
+        ))}
       </svg>
-      <span style={{
-        fontFamily: 'var(--font-mono)', fontSize: 10,
-        color: 'rgba(0,200,220,0.35)', letterSpacing: '0.12em',
-        textAlign: 'center', lineHeight: 1.6,
-      }}>
-        gameplay screenshot / video<br />drop {codename.toLowerCase()}.mp4 or .png
-      </span>
     </div>
-  </div>
-);
+  );
+};
 
-const ProjectCard = ({ project }: { project: Project }) =>
+const ProjectCard = ({ project, priority }: { project: Project; priority?: boolean }) =>
 {
   const [hovered, setHovered] = useState(false);
 
@@ -91,7 +80,7 @@ const ProjectCard = ({ project }: { project: Project }) =>
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <MediaPlaceholder codename={project.codename} />
+      <CardMedia project={project} priority={priority} />
       <div style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 20, flex: 1 }}>
 
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
@@ -187,7 +176,7 @@ export default function Work()
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))',
           gap: 20,
         }}>
-          {FEATURED.map(p => <ProjectCard key={p.codename} project={p} />)}
+          {FEATURED.map((p, i) => <ProjectCard key={p.codename} project={p} priority={i === 0} />)}
         </div>
 
         {/* View all button */}

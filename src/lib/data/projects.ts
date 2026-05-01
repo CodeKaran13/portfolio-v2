@@ -29,10 +29,11 @@ export const PROJECTS: Project[] = [
     tags: ['Unity', 'C#', 'PlayFab', 'Android'],
     media: {
       image: '/projects/ecorun/cover.png',
+      video: '/projects/ecorun/gameplay.mp4',
     },
     links: {
       caseStudy: '/projects/ecorun',
-      gameplay: '#',
+      gameplay: 'https://youtu.be/C729CLZcO8k',
     },
   },
   {
@@ -64,10 +65,11 @@ export const PROJECTS: Project[] = [
     tags: ['Unreal Engine 5', 'C++', 'Blueprints', 'Mobile'],
     media: {
       image: '/projects/ykr/cover.png',
+      video: '/projects/ykr/gameplay.mp4',
     },
     links: {
       caseStudy: '/projects/ykr',
-      gameplay: '#',
+      gameplay: 'https://youtu.be/sX3AQyWTOAg',
     },
   },
   {
@@ -98,17 +100,17 @@ export const PROJECTS: Project[] = [
     ],
     tags: ['Unity', 'C#', 'Multiplayer', 'Custom Netcode'],
     media: {
-      image: '/projects/bullbash/cover.svg',
+      image: '/projects/bullbash/cover.png',
     },
     links: {
       caseStudy: '/projects/bullbash',
-      gameplay: '#',
+      gameplay: 'https://www.youtube.com/watch?v=4Po9TycB80M',
     },
   },
   {
     slug: 'tankz',
     codename: 'TANKZ',
-    title: '4v4 Tankz N Glory',
+    title: 'Tankz N Glory',
     role: 'Multiplayer Gameplay Engineer',
     engine: 'Unity',
     engineColor: 'rgba(140,200,255,0.9)',
@@ -136,11 +138,11 @@ export const PROJECTS: Project[] = [
     ],
     tags: ['Unity', 'C#', 'Multiplayer', 'Mobile'],
     media: {
-      image: '/projects/tankz/cover.svg',
+      image: '/projects/tankz/cover.png',
     },
     links: {
       caseStudy: '/projects/tankz',
-      gameplay: '#',
+      gameplay: 'https://www.youtube.com/watch?v=6mY6_pPwUfw',
     },
   },
 ];
